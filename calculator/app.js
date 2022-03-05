@@ -18,11 +18,12 @@ function buildGrid(){
     let output = document.createElement('div');
 
     output.style.height = `${SIZE}px`;
-    output.style.width = `${COLUMNS * SIZE - 3}px`;
+    output.style.width = `${COLUMNS * SIZE - 2}px`;
     output.style.textAlign = `right`;
     output.style.border = `1px solid black`;
     output.style.backgroundColor = `white`;
     output.style.borderTopLeftRadius = '10px';
+    output.style.borderTopRightRadius = '10px';
     output.setAttribute('id', 'outputText')
     canvas.appendChild(output);
 
@@ -43,8 +44,6 @@ function buildGrid(){
     let input = document.createElement('input');
     input.style.height = `${SIZE - 6}px`;
     input.style.width = `${SIZE * COLUMNS - 16}px`;
-    // input.style.borderBottomLeftRadius = '10px';
-    // input.style.borderBottomRightRadius = '10px';
     input.style.textAlign = `right`;
     input.style.fontSize = `larger`;
     input.style.paddingRight = `10px`
@@ -63,9 +62,7 @@ function buildGrid(){
 
 buildGrid();
 
-function buttonValues(){
-    console.log('test');
-}
+
 let calcElements = [`%`, 'CE', 'C', 'ERASE', '1/x', 'x^2', '√',
                     '/', '7', '8', '9', '-', '4', '5', '6', '-', '1', '2', '3',
                     '+', '+/-', '0', '.', '=']
@@ -77,32 +74,18 @@ function setElements(array){
     array.forEach(element => {
         index++;
         textButton = document.getElementById(`btn-element-${index}`)
-        textButton.appendChild(document.createTextNode(element))
+        textButton.appendChild(document.createTextNode(element))    
     });
-
 };
 
 setElements(calcElements);
 
+function buttonValues(){
+    let buttonText = document.get;
+    
+    
+}
+
+
 let buttonsArray = [];
 let calculation = [];
-
-
-// let numbers;
-
-// let buttonText;
-// let buttonsArray = [];
-
-// function setNumbers(array){
-
-//     let index = 0;
-
-//         array.forEach(element => {
-//             index++;
-
-//             numbers = document.getElementById(`btn-element-${index}`)
-//             numbers.setAttribute('onclick', 'buttonValues()')
-//         })
-// }
-
-// setNumbers(calcElements);
