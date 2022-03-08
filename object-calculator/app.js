@@ -1,7 +1,5 @@
 'use strict'
 
-let a = 'a';
-
 let ROWS = 6;
 let COLS = 4;
 let SIZE = 80;
@@ -13,9 +11,8 @@ let calcElements = [``, `%`, 'CE', 'C', 'ERASE', '1/x', 'x^2', '√',
 
 let operation = {
     'firstOperand' : '',
-    'secondOperand': null,
-    'operator' : null,
-    'displayValue' : '0',
+    'secondOperand': '',
+    'operator' : null
 };
 
 function createGrid(){
@@ -35,7 +32,7 @@ function createGrid(){
     result.style.boxSizing = `border-box`;
     result.style.textAlign = `right`;
     result.style.fontSize = `x-large`;
-    result.style.padding = `15px`;
+    result.style.padding = `14px`;
 
     result.setAttribute(`id`, `operationOutput`);
     canvas.appendChild(result)
@@ -50,6 +47,7 @@ function createGrid(){
             let btn = document.createElement('button');
             btn.style.height = `${SIZE}px`;
             btn.style.width = `${SIZE}px`;
+            btn.style.padding = `2px`;
             btn.setAttribute(`id`, `btn-${index}`)
             btn.setAttribute(`onclick`, `inputElement(this.textContent)`)
 
@@ -58,10 +56,10 @@ function createGrid(){
 
             textButton = document.getElementById(`btn-${index}`)
             textButton.appendChild(document.createTextNode(`${calcElements[index]}`))
-
+            
         };
     };
-
+    
 };
 
 createGrid();
@@ -69,42 +67,81 @@ createGrid();
 function inputElement(value){
     
     let result = document.getElementById('operationOutput');
+    let arrayOperation = [operation.firstOperand, operation.operator, operation.secondOperand];
+    // console.log(arrayOperation);  
+    let operator;
     
     switch(value){
         
         case 'ERASE' : 
+
+        if (operation.operator == null || operation.secondOperand == ''){
+            operation.firstOperand = operation.firstOperand.slice(0, -1);
+            result.textContent = result.textContent.slice(0, -1);
+            console.log(operation.firstOperand);
+        }else{
+            operation.secondOperand = operation.secondOperand.slice(0, -1);
+            result.textContent = result.textContent.slice(0, -1);
+            console.log(operation.secondOperand);
+        }
         
-        operation.firstOperand = operation.firstOperand.slice(`${value}`);
-        // let stringContent = result.textContent;
-        // result.appendChild(stringContent.slice(0, -1));
-        // console.log(stringContent);
-        // String(result.appendChild(document.textContent.slice(0, -1)));
-        // console.log(typeof(String(result)));
         break
-        
+
         case '=' :
 
+        let final;
 
+        final = eval(arrayOperation[0] + arrayOperation[1] + arrayOperation[2]);
+        console.log(final);
+        result.textContent = final;
         break
-
+            
         case '+' :
         case '-' :
         case '/' :
         case '*' :
-        
+                        
+        result.textContent = result.textContent + value;
         operation.operator = `${value}`;
-  
+        break
+
+        case 'CE':
+        case 'C':
+
+        operation.firstOperand = '';
+        operation.operator = '';
+        operation.secondOperand = '';
+        result.textContent = '';
+        console.clear();
+        break
+
+        case 'x^2':
+        
+        let pwr;
+
+        pwr = Number(operation.firstOperand) ** 2;
+        result.textContent = pwr;
+        console.log(typeof(pwr));
+        break
+
+        case '√':
+
+        let sqr;
+
+        sqr = Math.sqrt(Number(operation.firstOperand));
+        result.textContent = sqr;
+
         default :
 
-        result.appendChild(document.createTextNode(`${value}`))
-        console.log(result.textContent);
+        if (operation.operator == null || operation.operator == ''){
+            operation.firstOperand += value;
+            console.log(operation.firstOperand);
+            
+        }else{
+            operation.secondOperand += value;
+            console.log(operation.secondOperand);
+        }
         
-
-        // console.log('c');
-
+        result.textContent += value;
     }
-    console.log(operation);
 }
-
-
-
